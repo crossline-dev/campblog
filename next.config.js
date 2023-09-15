@@ -1,9 +1,18 @@
-const { withKumaUI } = require('@kuma-ui/next-plugin')
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+      },
+      {
+        protocol: 'https',
+        hostname: `${process.env.NEXT_PUBLIC_NEWT_SPACE_UID}.assets.newt.so`,
+      },
+    ],
+  },
   trailingSlash: true,
 }
 
-module.exports = withKumaUI(nextConfig)
+module.exports = nextConfig

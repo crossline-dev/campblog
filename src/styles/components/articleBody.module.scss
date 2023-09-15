@@ -1,0 +1,66 @@
+@use "../common/index" as *;
+
+.heading_02 {
+  font-size: 1.5rem;
+  margin-bottom: 1.1rem;
+  margin-top: 2.3em;
+  font-weight: 600;
+}
+
+.heading_03 {
+  font-size: 1.25rem;
+  margin-top: 2.25em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+.p {
+  & + .p {
+    margin-top: 1.5em;
+  }
+  & > code {
+    padding: 0.2em 0.4em;
+    background: $c-bg-dark;
+    font-size: 0.85em;
+    border-radius: 4px;
+    vertical-align: 0.08em;
+  }
+}
+
+.ul,
+.ol {
+  padding-left: 1.8em;
+  margin: 1.4rem 0;
+}
+
+.pre {
+  margin: 1.3rem 0;
+  background: #1a2638;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: $radius;
+  box-shadow: 0 4px 6px -1px #000e1e26;
+  word-break: normal;
+  word-wrap: normal;
+  display: flex;
+  & > code {
+    font-family:
+      SFMono-Regular,
+      Consolas,
+      Liberation Mono,
+      Menlo,
+      monospace,
+      Apple Color Emoji,
+      Segoe UI Emoji,
+      Segoe UI Symbol,
+      Noto Color Emoji;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+    background: #0000;
+    font-size: 0.9em;
+    color: #fff;
+    display: block;
+    padding: 1.1rem;
+  }
+}

@@ -1,0 +1,39 @@
+@use "../common/index" as *;
+
+.wrapper {
+  width: 100%;
+  margin: 3rem auto 0;
+  padding: 0 clamp-calc(24px, 64px);
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item {
+  margin: 0 4px;
+  padding: 0;
+}
+
+.button {
+  border: 1px solid $c-bg-dark;
+  border-radius: 4px;
+  display: flex;
+  width: clamp-calc(32px, 48px);
+  height: clamp-calc(32px, 48px);
+  align-items: center;
+  justify-content: center;
+  color: $c-text-light;
+  text-decoration: none;
+  transition: background 0.2s;
+  font-weight: bold;
+  font-size: clamp-calc(12px, 18px);
+  background: none;
+  cursor: pointer;
+  &:hover {
+    background-color: $c-bg-dark;
+  }
+}

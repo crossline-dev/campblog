@@ -1,0 +1,13 @@
+@use "../common/index" as *;
+
+.footer {
+  display: flex;
+  @include mq(pc) {
+    padding: 24px 0;
+  }
+}
+
+.copyright {
+  text-align: center;
+  font-size: 0.9rem;
+}

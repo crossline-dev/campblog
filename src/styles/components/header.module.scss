@@ -1,0 +1,15 @@
+@use "../common/index" as *;
+
+.header {
+  display: flex;
+  background-color: #fff;
+  @include mq(pc) {
+    padding: 24px 0;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

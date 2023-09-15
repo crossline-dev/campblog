@@ -1,0 +1,20 @@
+@mixin p-supporting($color: black, $align: left, $size: 15px) {
+  color: $color;
+  display: block;
+  cursor: pointer;
+  @if ($color == red) {
+    font: {
+      weight: bold;
+      size: $size;
+    }
+  } @else if($color == blue) {
+    font: {
+      size: $size;
+    }
+    text: {
+      align: $align;
+    }
+  } @else {
+    cursor: help;
+  }
+}

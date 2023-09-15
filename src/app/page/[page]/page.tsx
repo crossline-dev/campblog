@@ -1,18 +1,35 @@
-import type { Metadata } from 'next'
 import { getArticles } from '@/lib/newt'
 import styles from '@/styles/components/postlist.module.scss'
 import ContainerWide from '@/components/ContainerWide'
 import { Pagination } from '@/components/Pagination'
 import { PostListItem } from '@/components/PostListItem'
 
-export const metadata: Metadata = {
-  title: 'Newt・Next.jsブログ',
-  description: 'NewtとNext.jsを利用したブログです',
+type Props = {
+  params: {
+    page: string
+  }
 }
 
-export default async function Home() {
+export async function generateStaticParams() {
+  const limit = Number(process.env.PAGE_LIMIT) || 10
+  const { total } = await getArticles()
+  const maxPage = Math.ceil(total / limit)
+  const pages = Array.from({ length: maxPage }, (_, index) => index + 1)
+
+  return pages.map((page) => ({
+    page: page.toString(),
+  }))
+}
+
+export const dynamicParams = false
+
+export default async function Page({ params }: Props) {
+  const { page: _page } = params
+  const page = Number(_page) || 1
+  const limit = Number(process.env.PAGE_LIMIT) || 10
   const { articles, total } = await getArticles({
-    limit: Number(process.env.PAGE_LIMIT) || 10,
+    limit,
+    skip: limit * (page - 1),
   })
 
   return (

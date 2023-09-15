@@ -1,0 +1,70 @@
+/*
+ * 機能：clamp関数の文字列を返す
+ * 引数：$size-at-min-width サイズ(フォントサイズなど)の最小値(pxやremなどの単位は必須)
+ * 　　　$size-at-max-width サイズ(フォントサイズなど)の最大値(pxやremなどの単位は必須)
+ * 　　　$min-width [省略可]サイズが最小値に到達する画面幅
+ * 　　　$max-width [省略可]サイズが最大値に到達する画面幅
+ * 使用方法：
+ *　　デフォルトの最小画面幅$min-width-defaultと最大画面幅$max-width-defaultを事前に指定しておく
+ *　　最小幅と最大幅をデフォルト以外にしたい場合は、引数にそれぞれ単位付きの画面幅を入れる
+ */
+$min-width-default: 480px; // デフォルトの最小画面幅
+$max-width-default: 1900px; // デフォルトの最大画面幅
+@function clamp-calc(
+  $size-at-min-width,
+  $size-at-max-width,
+  $min-width: $min-width-default,
+  $max-width: $max-width-default
+) {
+  // グラフの斜度
+  $slope: calc(
+    ($size-at-max-width - $size-at-min-width) / ($max-width - $min-width)
+  );
+
+  // グラフのy方向開始点の調整
+  $y-axis-intersection: -1 * $min-width * $slope + $size-at-min-width;
+  // 小数点以下3桁で四捨五入
+  $y-axis-intersection: round-decimal($y-axis-intersection, 3);
+  // $slopeが単位なしの数値なので、$return-valueで使用するために単位をvwにする
+  $slope-vw: calc($slope * 100vw);
+  // 小数点以下3桁で四捨五入
+  $slope-vw: round-decimal($slope-vw, 3);
+
+  // グラフの傾斜が逆方向になる場合、clamp関数の引数の最小値と最大値を入れ替える
+  // ※例えば、マイナスマージンで画面幅が広い時に絶対値での数値が大きい場合に発生する。
+  // 　入れ替えないと、画面幅に関係なくサイズの最小値が適用されてしまう。
+  @if $size-at-max-width < $size-at-min-width {
+    $temp-max: $size-at-max-width;
+    $temp-min: $size-at-min-width;
+    $size-at-max-width: $temp-min;
+    $size-at-min-width: $temp-max;
+  }
+
+  // 最終的な結果を格納
+  $return-value: clamp(
+    #{$size-at-min-width},
+    #{$y-axis-intersection} + #{$slope-vw},
+    #{$size-at-max-width}
+  );
+  @return $return-value;
+}
+// 小数点以下の指定した桁数で四捨五入する関数
+@function round-decimal($value, $decimal-place) {
+  // 四捨五入する値($value)を10の小数点以下桁数累乗倍する
+  $temp-value: calc($value * pow(10, $decimal-place));
+  // 累乗倍した数値で四捨五入(roundは小数点以下の指定ができない)
+  $temp-value: round($temp-value);
+  // 四捨五入した値を再度同じ10の累乗倍の数値で割った数値を返す
+  @return calc($temp-value / pow(10, $decimal-place));
+}
+// 累乗の関数(指数は正の整数のみで有効、負の指数は対象外)
+@function pow($number, $exponent) {
+  $value: 1;
+
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $value: $value * $number;
+    }
+  }
+  @return $value;
+}
