@@ -6,7 +6,7 @@ import { formatDate } from '@/lib/date'
 import styles from '@/styles/components/postlist.module.scss'
 import thumbEmpty from '@@/public/thumb_empty.png'
 
-export function PostListItem({ article }: { article: Article }) {
+export default function PostListItem({ article }: { article: Article }) {
   return (
     <article className={styles.item}>
       <h2 className={styles.title}>

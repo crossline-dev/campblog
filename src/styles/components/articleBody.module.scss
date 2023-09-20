@@ -5,6 +5,9 @@
   margin-bottom: 1.1rem;
   margin-top: 2.3em;
   font-weight: 600;
+  padding-bottom: 0.3em;
+  border-bottom: solid 2px $c-bg-dark;
+  outline: none;
 }
 
 .heading_03 {
@@ -12,6 +15,9 @@
   margin-top: 2.25em;
   margin-bottom: 0.5em;
   font-weight: 600;
+  border-left: solid 5px $c-bg-dark;
+  padding-left: 0.5em;
+  outline: none;
 }
 
 .p {
@@ -35,11 +41,11 @@
 
 .pre {
   margin: 1.3rem 0;
-  background: #1a2638;
+  background: #3a3b3c;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: $radius;
-  box-shadow: 0 4px 6px -1px #000e1e26;
+  box-shadow: 0 4px 6px -1px #01020320;
   word-break: normal;
   word-wrap: normal;
   display: flex;
@@ -57,7 +63,6 @@
     -webkit-font-smoothing: antialiased;
     margin: 0;
     padding: 0;
-    background: #0000;
     font-size: 0.9em;
     color: #fff;
     display: block;

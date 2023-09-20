@@ -1,0 +1,44 @@
+@use "../common/index" as *;
+
+.container {
+  border: solid 1px $c-bg;
+  border-radius: $radius;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem;
+  @include mq(tb) {
+    padding: 1.5rem 1.5rem;
+  }
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.listIcon {
+  color: $c-text-light;
+  font-size: 1.2rem;
+}
+
+.eyeIcon {
+  color: $c-text-light;
+  font-size: 1.2rem;
+  margin-left: auto;
+}
+
+.panel {
+  padding: 0 1rem 1rem;
+  @include mq(tb) {
+    padding: 0 1.5rem 1.5rem;
+  }
+  ul,
+  ol {
+    padding-left: 2rem;
+  }
+}

@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
+import { ContainerWide, Pagination, PostListItem } from '@/components'
 import { getArticles } from '@/lib/newt'
 import styles from '@/styles/components/postlist.module.scss'
-import ContainerWide from '@/components/ContainerWide'
-import { Pagination } from '@/components/Pagination'
-import { PostListItem } from '@/components/PostListItem'
 
 export const metadata: Metadata = {
   title: 'Newt・Next.jsブログ',

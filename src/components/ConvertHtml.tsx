@@ -3,19 +3,25 @@ import parse, { domToReact, Element } from 'html-react-parser'
 import styles from '@/styles/components/articleBody.module.scss'
 
 export default function ConvertHtml({ contentHTML }: { contentHTML: string }) {
+  let uniqueId = 0
+
   const contentReact = parse(contentHTML, {
     replace: (domNode) => {
       if (domNode instanceof Element && domNode.attribs) {
         if (domNode.name === 'h2') {
+          uniqueId++
+          const id = `heading_02_${uniqueId}`
           return (
-            <h2 className={styles.heading_02}>
+            <h2 id={id} className={styles.heading_02}>
               {domToReact(domNode.children)}
             </h2>
           )
         }
         if (domNode.name === 'h3') {
+          uniqueId++
+          const id = `heading_03_${uniqueId}`
           return (
-            <h3 className={styles.heading_03}>
+            <h3 id={id} className={styles.heading_03}>
               {domToReact(domNode.children)}
             </h3>
           )

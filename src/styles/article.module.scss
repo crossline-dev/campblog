@@ -2,18 +2,36 @@
 
 .article {
   width: 100%;
+  background-color: $c-bg;
+  padding-bottom: 3rem;
+  @include mq(pc) {
+    padding-bottom: clamp-calc(24px, 64px);
+  }
 }
 
 .header {
   position: relative;
-  background-color: $c-bg-dark;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  text-align: center;
+  @include mq(pc) {
+    padding-top: clamp-calc(24px, 64px);
+    padding-bottom: clamp-calc(24px, 64px);
+  }
 }
 
 .container {
   width: 100%;
   max-width: 1000px;
-  margin: 3rem auto 0;
-  padding: 0 clamp-calc(24px, 64px);
+  margin: 0 auto 0;
+  padding: 3rem clamp-calc(24px, 64px);
+  @include mq(pc) {
+    padding: clamp-calc(24px, 64px);
+  }
+  background-color: #fff;
+  @include mq(pc) {
+    border-radius: $radius;
+  }
 }
 
 .coverpicture {
@@ -21,6 +39,10 @@
   display: block;
   width: 100%;
   padding-top: 56.25%;
+  border-radius: $radius;
+  & + .title {
+    margin: 2rem auto 0;
+  }
 }
 
 .coverimage {
@@ -31,10 +53,41 @@
   height: 100%;
   left: 0;
   top: 0;
+  border-radius: $radius;
 }
 
 .body {
   & > :first-child {
     margin-top: 0;
   }
+}
+
+.title {
+  display: inline-block;
+  max-width: 1000px;
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+.metas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+}
+
+.category {
+  border-radius: 999px;
+  background-color: #fff;
+  border: solid 1px $c-bg-dark;
+  padding: 0.5em 1em;
+  font-size: clamp-calc(13px, 15px);
+  color: $c-text-light;
+  font-weight: 500;
+}
+
+.time {
+  font-size: clamp-calc(13px, 15px);
+  color: $c-text-lighter;
+  font-weight: 500;
 }

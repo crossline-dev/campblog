@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation'
 import styles from '@/styles/components/pagination.module.scss'
 
-export function Pagination({
+export default function Pagination({
   total,
   current,
   basePath,

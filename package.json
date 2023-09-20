@@ -24,6 +24,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "@headlessui/react": "^1.7.17",
     "@types/luxon": "^3.3.2",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
@@ -38,6 +39,8 @@
     "html-react-parser": "^4.2.2",
     "luxon": "^3.4.3",
     "prettier": "^3.0.3",
-    "sass": "^1.66.1"
+    "react-icons": "^4.11.0",
+    "sass": "^1.66.1",
+    "tocbot": "^4.21.1"
   }
 }

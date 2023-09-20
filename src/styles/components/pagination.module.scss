@@ -37,3 +37,10 @@
     background-color: $c-bg-dark;
   }
 }
+
+.button._current {
+  border: 1px solid $c-bg;
+  background-color: $c-bg;
+  pointer-events: none;
+  color: $c-text-lighter;
+}

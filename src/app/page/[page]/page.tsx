@@ -1,8 +1,6 @@
+import { ContainerWide, Pagination, PostListItem } from '@/components'
 import { getArticles } from '@/lib/newt'
 import styles from '@/styles/components/postlist.module.scss'
-import ContainerWide from '@/components/ContainerWide'
-import { Pagination } from '@/components/Pagination'
-import { PostListItem } from '@/components/PostListItem'
 
 type Props = {
   params: {
@@ -41,7 +39,7 @@ export default async function Page({ params }: Props) {
           ))}
         </div>
       </ContainerWide>
-      <Pagination total={total} current={1} basePath="/page" />
+      <Pagination total={total} current={page} basePath="/page" />
     </>
   )
 }

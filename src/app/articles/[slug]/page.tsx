@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { ContainerSlim, ConvertHtml } from '@/components'
+import { formatDate } from '@/lib/date'
 import { getArticle, getArticles } from '@/lib/newt'
 import styles from '@/styles/article.module.scss'
-import Container from '@/components/Container'
-import ConvertHtml from '@/components/ConvertHtml'
+import Toc from '@/components/Toc'
 
 type Props = {
   params: {
@@ -50,7 +51,7 @@ export default async function Page({ params }: Props) {
   return (
     <article className={styles.article}>
       <div className={styles.header}>
-        <Container>
+        <ContainerSlim>
           {article.coverImage ? (
             <picture className={styles.coverpicture}>
               <Image
@@ -63,12 +64,25 @@ export default async function Page({ params }: Props) {
           ) : (
             <></>
           )}
-        </Container>
+          <h1 className={styles.title}>{article.title}</h1>
+          <div className={styles.metas}>
+            <div className={styles.categorys}>
+              <span className={styles.category}>{article.category.name}</span>
+            </div>
+            <div className={styles.times}>
+              <time
+                className={styles.time}
+                dateTime={formatDate(article._sys.createdAt)}
+              >
+                {formatDate(article._sys.createdAt)}
+              </time>
+            </div>
+          </div>
+        </ContainerSlim>
       </div>
-      <div className={styles.container}>
-        <h1 className={styles.title}>{article.title}</h1>
-        <div className={styles.category}>{article.category.name}</div>
+      <div className={`${styles.container} article_container`}>
         <div className={styles.body}>
+          <Toc />
           <ConvertHtml contentHTML={article.body} />
         </div>
       </div>
