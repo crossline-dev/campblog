@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { ContainerSlim, ConvertHtml } from '@/components'
+import { AiFillTag } from 'react-icons/ai'
+import { ContainerSlim, ConvertHtml, Breadcrumb } from '@/components'
 import { formatDate } from '@/lib/date'
-import { getArticle, getArticles } from '@/lib/newt'
+import {
+  getArticle,
+  getArticles,
+  getPreviousArticle,
+  getNextArticle,
+} from '@/lib/newt'
 import styles from '@/styles/article.module.scss'
 import Toc from '@/components/Toc'
 
@@ -48,6 +55,9 @@ export default async function Page({ params }: Props) {
     notFound()
   }
 
+  const prevArticle = await getPreviousArticle(article)
+  const nextArticle = await getNextArticle(article)
+
   return (
     <article className={styles.article}>
       <div className={styles.header}>
@@ -66,26 +76,84 @@ export default async function Page({ params }: Props) {
           )}
           <h1 className={styles.title}>{article.title}</h1>
           <div className={styles.metas}>
-            <div className={styles.categorys}>
+            <Link
+              className={styles.categoryAnchor}
+              href={`/categorys/${article.category.slug}`}
+            >
               <span className={styles.category}>{article.category.name}</span>
-            </div>
-            <div className={styles.times}>
-              <time
-                className={styles.time}
-                dateTime={formatDate(article._sys.createdAt)}
-              >
-                {formatDate(article._sys.createdAt)}
-              </time>
-            </div>
+            </Link>
+            <time
+              className={styles.time}
+              dateTime={formatDate(article._sys.createdAt)}
+            >
+              {formatDate(article._sys.createdAt)}
+            </time>
           </div>
         </ContainerSlim>
       </div>
       <div className={`${styles.container} article_container`}>
         <div className={styles.body}>
+          {article.meta?.description ? (
+            <p className={styles.lead}>{article.meta?.description}</p>
+          ) : (
+            ''
+          )}
           <Toc />
           <ConvertHtml contentHTML={article.body} />
+          <ul className={styles.tags}>
+            {(article.tags ?? []).map((tag) => (
+              <li className={styles.tagItem} key={tag._id}>
+                <Link className={styles.tagAnchor} href={`/tags/${tag.slug}`}>
+                  <AiFillTag />
+                  {tag.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Breadcrumb
+            lists={[
+              {
+                name: 'HOME',
+                path: '/',
+              },
+              {
+                name: article.category.name,
+                path: '/categorys/' + article.category.slug,
+              },
+              {
+                name: article.title,
+                path: article.slug,
+              },
+            ]}
+          />
         </div>
       </div>
+      <nav className={styles.pnLinks}>
+        {prevArticle && (
+          <div className={styles.pnLinks__previous}>
+            <Link
+              className={styles.pnLinks__anchor}
+              href={`/articles/${prevArticle.slug}`}
+            >
+              <span className={styles.pnLinks__label}>Previous Article</span>
+              <span className={styles.pnLinks__arrow}></span>
+              <span className={styles.pnLinks__title}>{prevArticle.title}</span>
+            </Link>
+          </div>
+        )}
+        {nextArticle && (
+          <div className={styles.pnLinks__next}>
+            <Link
+              className={styles.pnLinks__anchor}
+              href={`/articles/${nextArticle.slug}`}
+            >
+              <span className={styles.pnLinks__label}>Next Article</span>
+              <span className={styles.pnLinks__arrow}></span>
+              <span className={styles.pnLinks__title}>{nextArticle.title}</span>
+            </Link>
+          </div>
+        )}
+      </nav>
     </article>
   )
 }

@@ -1,0 +1,52 @@
+@use "../common/index" as *;
+
+.wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 3rem auto 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  width: max-content;
+  font-size: 0.8rem;
+  color: $c-text-light;
+  overflow-x: auto;
+  word-break: normal;
+  word-wrap: normal;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.anchor {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: currentColor;
+  text-decoration: none;
+  text-underline-offset: 0.15em;
+  transition: 0.25s;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.homeicon {
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.careticon {
+  margin-bottom: 1px;
+  color: $c-text-lighter;
+}

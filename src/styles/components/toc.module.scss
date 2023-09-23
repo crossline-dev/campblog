@@ -1,7 +1,7 @@
 @use "../common/index" as *;
 
 .container {
-  border: solid 1px $c-bg;
+  border: solid 1px $c-bg-dark;
   border-radius: $radius;
 }
 
@@ -10,7 +10,7 @@
   align-items: center;
   gap: 0.5em;
   width: 100%;
-  padding: 0.5rem 1rem 0.5rem;
+  padding: 1rem 1rem 0.5rem;
   @include mq(tb) {
     padding: 1.5rem 1.5rem;
   }
@@ -40,5 +40,6 @@
   ul,
   ol {
     padding-left: 2rem;
+    font-size: 0.9rem;
   }
 }

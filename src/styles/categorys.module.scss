@@ -1,0 +1,15 @@
+@use "./common/index" as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp-calc(24px, 30px) clamp-calc(0px, 2px);
+  @include mq(tb) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include mq(pc) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  list-style-type: none;
+}

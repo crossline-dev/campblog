@@ -1,3 +1,4 @@
+import Breadcrumb from '@/components/Breadcrumb'
 import Container from '@/components/Container'
 import ContainerSlim from '@/components/ContainerSlim'
 import ContainerWide from '@/components/ContainerWide'
@@ -16,4 +17,5 @@ export {
   ConvertHtml,
   Pagination,
   PostListItem,
+  Breadcrumb,
 }
