@@ -13,3 +13,40 @@
   }
   list-style-type: none;
 }
+
+.title {
+  display: flex;
+  flex-direction: column;
+  padding: clamp-calc(12px, 24px);
+}
+
+.titleMain {
+  font-size: clamp-calc(24px, 32px);
+  padding-top: 0.2em;
+  font-weight: 500;
+}
+
+.titleSub {
+  position: relative;
+  font-size: clamp-calc(12px, 16px);
+  font-weight: 400;
+  color: $c-text-lighter;
+  padding-left: 3.5em;
+  @include mq(pc) {
+    padding-left: 76px;
+  }
+  font-style: italic;
+  &::before {
+    position: absolute;
+    content: "";
+    display: block;
+    width: 3em;
+    @include mq(pc) {
+      width: 60px;
+    }
+    height: 1px;
+    background-color: $c-text-lighter;
+    top: calc(50%);
+    left: 0;
+  }
+}

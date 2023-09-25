@@ -76,12 +76,17 @@ export default async function Page({ params }: Props) {
           )}
           <h1 className={styles.title}>{article.title}</h1>
           <div className={styles.metas}>
-            <Link
-              className={styles.categoryAnchor}
-              href={`/categorys/${article.category.slug}`}
-            >
-              <span className={styles.category}>{article.category.name}</span>
-            </Link>
+            <ul>
+              {(article.categorys ?? []).map((category) => (
+                <Link
+                  key={category._id}
+                  className={styles.categoryAnchor}
+                  href={`/categorys/${category.slug}`}
+                >
+                  <span className={styles.category}>{category.name}</span>
+                </Link>
+              ))}
+            </ul>
             <time
               className={styles.time}
               dateTime={formatDate(article._sys.createdAt)}
@@ -117,8 +122,8 @@ export default async function Page({ params }: Props) {
                 path: '/',
               },
               {
-                name: article.category.name,
-                path: '/categorys/' + article.category.slug,
+                name: article.categorys[0].name,
+                path: '/categorys/' + article.categorys[0].slug,
               },
               {
                 name: article.title,

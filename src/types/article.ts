@@ -14,7 +14,7 @@ export interface Article extends Content {
   body: string
   coverImage: Media
   tags?: Tag[]
-  category: Category
+  categorys: Category[]
 }
 
 export interface Archive {

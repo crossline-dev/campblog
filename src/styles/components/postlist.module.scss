@@ -103,6 +103,10 @@
   font-size: clamp-calc(16px, 19px);
 }
 
+.categorys {
+  list-style: none;
+}
+
 .category {
   font-weight: 600;
   color: $c-text-light;

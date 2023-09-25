@@ -248,39 +248,40 @@ export const getArchives = cache(async (): Promise<Archive[]> => {
 })
 
 export const getCategorys = cache(async (): Promise<CategoryWithCount[]> => {
-  const { items: Categorys } = await client.getContents<Category>({
+  const { items: categorys } = await client.getContents<Category>({
     appUid: process.env.NEWT_APP_UID + '',
     modelUid: process.env.NEWT_CATEGORY_MODEL_UID + '',
   })
 
-  const { items: articles } = await client.getContents<{ Categorys: string[] }>(
+  const { items: articles } = await client.getContents<{ categorys: string[] }>(
     {
       appUid: process.env.NEWT_APP_UID + '',
       modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
       query: {
         depth: 0,
-        select: ['Categorys'],
+        select: ['categorys'],
       },
     }
   )
 
-  const getCategoryCount = (Category: Category) => {
+  const getCategoryCount = (category: Category) => {
     return articles.filter((article) => {
-      return article.Categorys?.some(
-        (articleCategory: string) => articleCategory === Category._id
+      return article.categorys?.some(
+        (articleCategory: string) => articleCategory === category._id
       )
     }).length
   }
 
-  const popularCategorys: CategoryWithCount[] = Categorys.map((Category) => {
-    return {
-      ...Category,
-      count: getCategoryCount(Category),
-    }
-  })
-    .filter((Category) => {
+  const popularCategorys: CategoryWithCount[] = categorys
+    .map((category) => {
+      return {
+        ...category,
+        count: getCategoryCount(category),
+      }
+    })
+    .filter((category) => {
       // 1件も記事のないタグは除外
-      return Category.count > 0
+      return category.count > 0
     })
     .sort((a, b) => {
       return b.count - a.count
@@ -295,7 +296,7 @@ export const getCategory = cache(
   async (slug: string): Promise<Category | null> => {
     if (!slug) return null
 
-    const Category = await client.getFirstContent<Category>({
+    const category = await client.getFirstContent<Category>({
       appUid: process.env.NEWT_APP_UID + '',
       modelUid: process.env.NEWT_CATEGORY_MODEL_UID + '',
       query: {
@@ -303,6 +304,6 @@ export const getCategory = cache(
       },
     })
 
-    return Category
+    return category
   }
 )

@@ -48,7 +48,7 @@ export default async function Page({ params }: Props) {
   if (!category) {
     notFound()
   }
-  const headingText = `#${category.name}`
+  const headingText = category.name
 
   const limit = Number(process.env.PAGE_LIMIT) || 10
   const { articles, total } = await getArticles({
@@ -59,7 +59,10 @@ export default async function Page({ params }: Props) {
 
   return (
     <ContainerWide>
-      <h1>{headingText}</h1>
+      <h1 className={styles.title}>
+        <span className={styles.titleSub}>category</span>
+        <span className={styles.titleMain}>{headingText}</span>
+      </h1>
       <div className={styles.list}>
         {articles.map((article) => (
           <PostListItem key={article._id} article={article} />

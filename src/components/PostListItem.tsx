@@ -36,7 +36,13 @@ export default function PostListItem({ article }: { article: Article }) {
         <p className={styles.readmore}>Read More</p>
       </div>
       <div className={styles.metas}>
-        <span className={styles.category}>{article.category.name}</span>
+        <ul className={styles.categorys}>
+          {(article.categorys ?? []).map((category) => (
+            <li key={category._id}>
+              <span className={styles.category}>{category.name}</span>
+            </li>
+          ))}
+        </ul>
         <div className={styles.time}>
           <time dateTime={formatDate(article._sys.createdAt)}>
             {formatDate(article._sys.createdAt)}
