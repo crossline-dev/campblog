@@ -5,6 +5,7 @@ import ContainerWide from '@/components/ContainerWide'
 import ConvertHtml from '@/components/ConvertHtml'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import LinkCard from '@/components/LinkCard'
 import Pagination from '@/components/Pagination'
 import PostListItem from '@/components/PostListItem'
 
@@ -18,4 +19,5 @@ export {
   Pagination,
   PostListItem,
   Breadcrumb,
+  LinkCard,
 }

@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: `${process.env.NEXT_PUBLIC_NEWT_SPACE_UID}.assets.newt.so`,
       },
+      {
+        protocol: 'https',
+        hostname: 'www.google.com',
+      },
     ],
   },
   trailingSlash: true,

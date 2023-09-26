@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { AiFillTag } from 'react-icons/ai'
-import { ContainerSlim, ConvertHtml, Breadcrumb } from '@/components'
+import { ContainerSlim, ConvertHtml, Breadcrumb, LinkCard } from '@/components'
 import { formatDate } from '@/lib/date'
 import {
   getArticle,
@@ -32,9 +33,11 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = params
   const article = await getArticle(slug)
 
-  const title = article?.meta?.title ?? article?.title
+  const title = article?.meta?.title || article?.title
   const description = article?.meta?.description
   const ogImage = article?.meta?.ogImage?.src
+
+  console.log(title)
 
   return {
     title,
@@ -54,7 +57,6 @@ export default async function Page({ params }: Props) {
   if (!article) {
     notFound()
   }
-
   const prevArticle = await getPreviousArticle(article)
   const nextArticle = await getNextArticle(article)
 
@@ -98,13 +100,20 @@ export default async function Page({ params }: Props) {
       </div>
       <div className={`${styles.container} article_container`}>
         <div className={styles.body}>
-          {article.meta?.description ? (
+          {article.meta?.description && (
             <p className={styles.lead}>{article.meta?.description}</p>
-          ) : (
-            ''
           )}
           <Toc />
-          <ConvertHtml contentHTML={article.body} />
+          {article.body.map((item, index) =>
+            item.type === 'MARKDOWN' ? (
+              <ConvertHtml
+                contentHTML={typeof item.data === 'string' ? item.data : ''}
+                key={index}
+              />
+            ) : item.type === 'linkcard' ? (
+              <LinkCard href={item.data.url} />
+            ) : null
+          )}
           <ul className={styles.tags}>
             {(article.tags ?? []).map((tag) => (
               <li className={styles.tagItem} key={tag._id}>
