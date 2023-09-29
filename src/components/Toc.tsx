@@ -11,6 +11,7 @@ export default function Toc() {
       tocSelector: '.toc',
       contentSelector: '.article_container',
       headingSelector: 'h2',
+      ignoreSelector: '.tocignore',
     })
 
     return () => {

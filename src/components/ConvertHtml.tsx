@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import parse, { domToReact, Element } from 'html-react-parser'
+import Image from 'next/image'
 import styles from '@/styles/components/articleBody.module.scss'
 
 export default function ConvertHtml({ contentHTML }: { contentHTML: string }) {
@@ -43,7 +44,11 @@ export default function ConvertHtml({ contentHTML }: { contentHTML: string }) {
           return <li className={styles.li}>{domToReact(domNode.children)}</li>
         }
         if (domNode.name === 'p') {
-          return <p className={styles.p}>{domToReact(domNode.children)}</p>
+          return (
+            <p className={styles.p}>
+              {domToReact(domNode.children, contentHTML)}
+            </p>
+          )
         }
         if (domNode.name === 'pre') {
           return (
@@ -54,6 +59,9 @@ export default function ConvertHtml({ contentHTML }: { contentHTML: string }) {
           return (
             <code className={styles.code}>{domToReact(domNode.children)}</code>
           )
+        }
+        if (domNode.name === 'img') {
+          return <Image src={domNode.attribs.src} alt={domNode.attribs.alt} />
         }
       }
     },

@@ -18,7 +18,7 @@ const url = 'https://crossline.camp'
 export const metadata: Metadata = {
   title: {
     default: siteName,
-    template: `%s - ${siteName}`,
+    template: `%s｜${siteName}`,
   },
   description,
   openGraph: {

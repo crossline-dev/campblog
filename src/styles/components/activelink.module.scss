@@ -1,0 +1,10 @@
+@use "../common/index" as *;
+
+.link {
+  color: #000;
+  text-decoration: none;
+}
+
+.active {
+  text-decoration: underline;
+}

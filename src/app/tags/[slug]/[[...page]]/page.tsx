@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { ContainerWide, Pagination, PostListItem } from '@/components/'
+import { Container, Pagination, PostListItem } from '@/components/'
 import { getArticles, getTags, getTag } from '@/lib/newt'
 import styles from '@/styles/tags.module.scss'
 
@@ -40,6 +40,17 @@ export async function generateStaticParams() {
 }
 export const dynamicParams = false
 
+export async function generateMetadata({ params }: Props) {
+  const { slug } = params
+  const category = await getTag(slug)
+
+  const title = category?.name
+
+  return {
+    title,
+  }
+}
+
 export default async function Page({ params }: Props) {
   const { slug, page: _page } = params
   const page = Number(_page) || 1
@@ -48,7 +59,7 @@ export default async function Page({ params }: Props) {
   if (!tag) {
     notFound()
   }
-  const headingText = `#${tag.name}`
+  const headingText = tag.name
 
   const limit = Number(process.env.PAGE_LIMIT) || 10
   const { articles, total } = await getArticles({
@@ -58,14 +69,17 @@ export default async function Page({ params }: Props) {
   })
 
   return (
-    <ContainerWide>
-      <h1>{headingText}</h1>
+    <Container>
+      <h1 className={styles.title}>
+        <span className={styles.titleSub}>tag</span>
+        <span className={styles.titleMain}>{headingText}</span>
+      </h1>
       <div className={styles.list}>
         {articles.map((article) => (
           <PostListItem key={article._id} article={article} />
         ))}
       </div>
       <Pagination total={total} current={page} basePath={`/tags/${slug}`} />
-    </ContainerWide>
+    </Container>
   )
 }

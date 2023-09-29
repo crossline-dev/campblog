@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { ContainerWide, Pagination, PostListItem } from '@/components/'
+import { Container, Pagination, PostListItem } from '@/components/'
 import { getArticles, getCategorys, getCategory } from '@/lib/newt'
 import styles from '@/styles/categorys.module.scss'
 
@@ -40,6 +40,17 @@ export async function generateStaticParams() {
 }
 export const dynamicParams = false
 
+export async function generateMetadata({ params }: Props) {
+  const { slug } = params
+  const category = await getCategory(slug)
+
+  const title = category?.name
+
+  return {
+    title,
+  }
+}
+
 export default async function Page({ params }: Props) {
   const { slug, page: _page } = params
   const page = Number(_page) || 1
@@ -58,7 +69,7 @@ export default async function Page({ params }: Props) {
   })
 
   return (
-    <ContainerWide>
+    <Container>
       <h1 className={styles.title}>
         <span className={styles.titleSub}>category</span>
         <span className={styles.titleMain}>{headingText}</span>
@@ -73,6 +84,6 @@ export default async function Page({ params }: Props) {
         current={page}
         basePath={`/categorys/${slug}`}
       />
-    </ContainerWide>
+    </Container>
   )
 }

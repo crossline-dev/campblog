@@ -2,6 +2,7 @@
 
 .footer {
   display: flex;
+  border-top: solid 1px $c-bg-light;
   @include mq(pc) {
     padding: 24px 0;
   }
@@ -10,5 +11,5 @@
 .copyright {
   text-align: center;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
 }

@@ -3,7 +3,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { AiFillTag } from 'react-icons/ai'
+import {
+  AiFillTag,
+  AiFillYoutube,
+  AiOutlineInstagram,
+  AiOutlineTwitter,
+} from 'react-icons/ai'
+import { BsVectorPen } from 'react-icons/bs'
 import { ContainerSlim, ConvertHtml, Breadcrumb, LinkCard } from '@/components'
 import { formatDate } from '@/lib/date'
 import {
@@ -37,8 +43,6 @@ export async function generateMetadata({ params }: Props) {
   const description = article?.meta?.description
   const ogImage = article?.meta?.ogImage?.src
 
-  console.log(title)
-
   return {
     title,
     description,
@@ -59,6 +63,10 @@ export default async function Page({ params }: Props) {
   }
   const prevArticle = await getPreviousArticle(article)
   const nextArticle = await getNextArticle(article)
+
+  const twitterUrl = `https://twitter.com/${article.author.twitter}`
+  const instagramUrl = `https://www.instagram.com/${article.author.instagram}`
+  const youtubeUrl = `https://www.youtube.com/@${article.author.youtube}`
 
   return (
     <article className={styles.article}>
@@ -106,12 +114,27 @@ export default async function Page({ params }: Props) {
           <Toc />
           {article.body.map((item, index) =>
             item.type === 'MARKDOWN' ? (
-              <ConvertHtml
-                contentHTML={typeof item.data === 'string' ? item.data : ''}
-                key={index}
-              />
+              <ConvertHtml contentHTML={item.data} key={index} />
             ) : item.type === 'linkcard' ? (
               <LinkCard href={item.data.url} />
+            ) : item.type === 'IMAGE' ? (
+              <figure className={styles.figure}>
+                <Image
+                  className={styles.img}
+                  src={item.data.src}
+                  width={item.data.width}
+                  height={item.data.height}
+                  alt={item.data.altText}
+                />
+                {item.data.description !== undefined && (
+                  <figcaption>{item.data.description}</figcaption>
+                )}
+              </figure>
+            ) : item.type === 'affiliateLink' ? (
+              <div>
+                <span>{item.data.affi.name}</span>
+                <span>{item.data.affi.amazon}</span>
+              </div>
             ) : null
           )}
           <ul className={styles.tags}>
@@ -124,6 +147,75 @@ export default async function Page({ params }: Props) {
               </li>
             ))}
           </ul>
+          <aside className={styles.author}>
+            <h2 className={`${styles.authorTitle} tocignore`}>
+              <BsVectorPen className={styles.authorIcon} />
+              この記事を書いた人
+            </h2>
+            <div className={styles.authorBody}>
+              <div className={styles.authorProfile}>
+                {article.author.profileImage ? (
+                  <Image
+                    className={styles.authorImage}
+                    src={article.author.profileImage.src}
+                    alt={article.author.fullName}
+                    width="512"
+                    height="512"
+                  />
+                ) : (
+                  ''
+                )}
+                <div className={styles.authorName}>
+                  <span className={styles.jp}>{article.author.fullName}</span>
+                  <span className={styles.en}>{article.author.enName}</span>
+                </div>
+              </div>
+              <div className={styles.authorDescription}>
+                <p>{article.author.biography}</p>
+                {article.author.twitter ||
+                article.author.instagram ||
+                article.author.youtube ? (
+                  <ul className={styles.authorLinks}>
+                    {article.author.twitter ? (
+                      <li className={styles.authorSns}>
+                        <a href={twitterUrl} target="_blank" rel="noreferrer">
+                          <AiOutlineTwitter
+                            className={styles.authorSns__twitter}
+                          />
+                        </a>
+                      </li>
+                    ) : (
+                      ''
+                    )}
+                    {article.author.instagram ? (
+                      <li className={styles.authorSns}>
+                        <a href={instagramUrl} target="_blank" rel="noreferrer">
+                          <AiOutlineInstagram
+                            className={styles.authorSns__instagram}
+                          />
+                        </a>
+                      </li>
+                    ) : (
+                      ''
+                    )}
+                    {article.author.youtube ? (
+                      <li className={styles.authorSns}>
+                        <a href={youtubeUrl} target="_blank" rel="noreferrer">
+                          <AiFillYoutube
+                            className={styles.authorSns__youtube}
+                          />
+                        </a>
+                      </li>
+                    ) : (
+                      ''
+                    )}
+                  </ul>
+                ) : (
+                  ''
+                )}
+              </div>
+            </div>
+          </aside>
           <Breadcrumb
             lists={[
               {

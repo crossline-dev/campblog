@@ -23,6 +23,7 @@
 .metadata {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   flex: 1 1;
   height: 100%;
   padding: 0.8em 1.2em;
@@ -47,20 +48,17 @@
 
 .description {
   flex: 1;
-  margin-top: 0.5em;
-}
-
-.p {
-  font-size: 0.7rem;
-  @include mq(pc) {
-    font-size: 0.8rem;
-  }
-  color: $c-text-light;
+  margin-top: 0.5rem;
   overflow: hidden;
   max-height: 1.55em;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+  font-size: 0.8rem;
+  @include mq(pc) {
+    font-size: 0.9rem;
+  }
+  color: $c-text-light;
 }
 
 .data {
@@ -70,6 +68,7 @@
   overflow: hidden;
   white-space: nowrap;
   font-size: 0.7rem;
+  margin-top: 0.5rem;
   @include mq(pc) {
     font-size: 0.8rem;
   }

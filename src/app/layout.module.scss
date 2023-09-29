@@ -8,4 +8,11 @@
 }
 
 .main {
+  background-color: $c-bg;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  @include mq(pc) {
+    padding-top: clamp-calc(24px, 64px);
+    padding-bottom: clamp-calc(24px, 64px);
+  }
 }
