@@ -7,14 +7,14 @@ import { createClient } from 'newt-client-js'
 import { cache } from 'react'
 
 const client = createClient({
-  spaceUid: process.env.NEWT_SPACE_UID + '',
-  token: process.env.NEWT_CDN_API_TOKEN + '',
-  apiType: process.env.NEWT_API_TYPE as 'cdn' | 'api',
+  spaceUid: process.env.NEXT_PUBLIC_NEWT_SPACE_UID + '',
+  token: process.env.NEXT_PUBLIC_NEWT_CDN_API_TOKEN + '',
+  apiType: process.env.NEXT_PUBLIC_NEWT_API_TYPE as 'cdn' | 'api',
 })
 
 export const getApp = cache(async (): Promise<AppMeta> => {
   const app = await client.getApp({
-    appUid: process.env.NEWT_APP_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
   })
 
   return app
@@ -25,8 +25,8 @@ export const getArticles = cache(
     query?: GetContentsQuery
   ): Promise<{ articles: Article[]; total: number }> => {
     const { items: articles, total } = await client.getContents<Article>({
-      appUid: process.env.NEWT_APP_UID + '',
-      modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
       query: {
         depth: 2,
         ...query,
@@ -45,8 +45,8 @@ export const getArticle = cache(
     if (!slug) return null
 
     const article = await client.getFirstContent<Article>({
-      appUid: process.env.NEWT_APP_UID + '',
-      modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
       query: {
         depth: 2,
         slug,
@@ -61,8 +61,8 @@ export const getPreviousArticle = cache(
   async (currentArticle: Article): Promise<Article | null> => {
     const { createdAt } = currentArticle._sys
     const article = await client.getFirstContent<Article>({
-      appUid: process.env.NEWT_APP_UID + '',
-      modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
       query: {
         select: ['slug', 'title'],
         '_sys.createdAt': {
@@ -80,8 +80,8 @@ export const getNextArticle = cache(
   async (currentArticle: Article): Promise<Article | null> => {
     const { createdAt } = currentArticle._sys
     const article = await client.getFirstContent<Article>({
-      appUid: process.env.NEWT_APP_UID + '',
-      modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
       query: {
         select: ['slug', 'title'],
         '_sys.createdAt': {
@@ -97,8 +97,8 @@ export const getNextArticle = cache(
 
 export const getArticleBySlug = cache(async (slug: string) => {
   const article = await client.getFirstContent<Article>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
     query: {
       slug,
       select: ['_id', 'title', 'slug', 'body', 'coverImage', 'tags'],
@@ -110,13 +110,13 @@ export const getArticleBySlug = cache(async (slug: string) => {
 
 export const getTags = cache(async (): Promise<TagWithCount[]> => {
   const { items: tags } = await client.getContents<Tag>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_TAG_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_TAG_MODEL_UID + '',
   })
 
   const { items: articles } = await client.getContents<{ tags: string[] }>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
     query: {
       depth: 0,
       select: ['tags'],
@@ -153,8 +153,8 @@ export const getTag = cache(async (slug: string): Promise<Tag | null> => {
   if (!slug) return null
 
   const tag = await client.getFirstContent<Tag>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_TAG_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_TAG_MODEL_UID + '',
     query: {
       slug,
     },
@@ -170,8 +170,8 @@ export const getAuthors = cache(async (): Promise<Author[]> => {
   })
 
   const { items: articles } = await client.getContents<{ author: string }>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
     query: {
       depth: 0,
       select: ['author'],
@@ -196,8 +196,8 @@ export const getAuthor = cache(async (slug: string): Promise<Author | null> => {
   if (!slug) return null
 
   const author = await client.getFirstContent<Author>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_AUTHOR_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_AUTHOR_MODEL_UID + '',
     query: {
       slug,
     },
@@ -210,8 +210,8 @@ export const getArchives = cache(async (): Promise<Archive[]> => {
   const { items: articles } = await client.getContents<{
     _sys: { createdAt: string }
   }>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
     query: {
       select: ['_sys.createdAt'],
     },
@@ -249,14 +249,14 @@ export const getArchives = cache(async (): Promise<Archive[]> => {
 
 export const getCategorys = cache(async (): Promise<CategoryWithCount[]> => {
   const { items: categorys } = await client.getContents<Category>({
-    appUid: process.env.NEWT_APP_UID + '',
-    modelUid: process.env.NEWT_CATEGORY_MODEL_UID + '',
+    appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+    modelUid: process.env.NEXT_PUBLIC_NEWT_CATEGORY_MODEL_UID + '',
   })
 
   const { items: articles } = await client.getContents<{ categorys: string[] }>(
     {
-      appUid: process.env.NEWT_APP_UID + '',
-      modelUid: process.env.NEWT_ARTICLE_MODEL_UID + '',
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+      modelUid: process.env.NEXT_PUBLIC_NEWT_ARTICLE_MODEL_UID + '',
       query: {
         depth: 0,
         select: ['categorys'],
@@ -297,8 +297,8 @@ export const getCategory = cache(
     if (!slug) return null
 
     const category = await client.getFirstContent<Category>({
-      appUid: process.env.NEWT_APP_UID + '',
-      modelUid: process.env.NEWT_CATEGORY_MODEL_UID + '',
+      appUid: process.env.NEXT_PUBLIC_NEWT_APP_UID + '',
+      modelUid: process.env.NEXT_PUBLIC_NEWT_CATEGORY_MODEL_UID + '',
       query: {
         slug,
       },

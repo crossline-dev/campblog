@@ -9,6 +9,17 @@
   }
 }
 
+.articleBottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px dashed $c-bg-dark;
+}
+
 .header {
   position: relative;
   padding-bottom: 3rem;
@@ -110,14 +121,10 @@
 }
 
 .tags {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
   display: flex;
   flex-wrap: wrap;
   list-style: none;
   gap: 0.25em 1em;
-  padding-top: 2.5rem;
-  border-top: 1px dashed $c-bg-dark;
 }
 
 .tagAnchor {

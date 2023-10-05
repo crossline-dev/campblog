@@ -10,8 +10,15 @@ import {
   AiOutlineTwitter,
 } from 'react-icons/ai'
 import { BsVectorPen } from 'react-icons/bs'
-import { ContainerSlim, ConvertHtml, Breadcrumb, LinkCard } from '@/components'
-import { formatDate } from '@/lib/date'
+import {
+  ContainerSlim,
+  ConvertHtml,
+  Breadcrumb,
+  LinkCard,
+  ArticleMeta,
+  ArticleTitle,
+  CoverImage,
+} from '@/components'
 import {
   getArticle,
   getArticles,
@@ -20,6 +27,7 @@ import {
 } from '@/lib/newt'
 import styles from '@/styles/article.module.scss'
 import Toc from '@/components/Toc'
+import { TwitterShareButton } from '@/components/TwitterShareButton'
 
 type Props = {
   params: {
@@ -41,7 +49,6 @@ export async function generateMetadata({ params }: Props) {
 
   const title = article?.meta?.title || article?.title
   const description = article?.meta?.description
-  const ogImage = article?.meta?.ogImage?.src
 
   return {
     title,
@@ -50,7 +57,6 @@ export async function generateMetadata({ params }: Props) {
       type: 'article',
       title,
       description,
-      images: ogImage,
     },
   }
 }
@@ -72,38 +78,9 @@ export default async function Page({ params }: Props) {
     <article className={styles.article}>
       <div className={styles.header}>
         <ContainerSlim>
-          {article.coverImage ? (
-            <picture className={styles.coverpicture}>
-              <Image
-                className={styles.coverimage}
-                src={article.coverImage.src}
-                fill
-                alt={article.title}
-              />
-            </picture>
-          ) : (
-            <></>
-          )}
-          <h1 className={styles.title}>{article.title}</h1>
-          <div className={styles.metas}>
-            <ul>
-              {(article.categorys ?? []).map((category) => (
-                <Link
-                  key={category._id}
-                  className={styles.categoryAnchor}
-                  href={`/categorys/${category.slug}`}
-                >
-                  <span className={styles.category}>{category.name}</span>
-                </Link>
-              ))}
-            </ul>
-            <time
-              className={styles.time}
-              dateTime={formatDate(article._sys.createdAt)}
-            >
-              {formatDate(article._sys.createdAt)}
-            </time>
-          </div>
+          {article.coverImage ? <CoverImage article={article} /> : <></>}
+          <ArticleTitle>{article.title}</ArticleTitle>
+          <ArticleMeta article={article} />
         </ContainerSlim>
       </div>
       <div className={`${styles.container} article_container`}>
@@ -116,9 +93,9 @@ export default async function Page({ params }: Props) {
             item.type === 'MARKDOWN' ? (
               <ConvertHtml contentHTML={item.data} key={index} />
             ) : item.type === 'linkcard' ? (
-              <LinkCard href={item.data.url} />
+              <LinkCard href={item.data.url} key={index} />
             ) : item.type === 'IMAGE' ? (
-              <figure className={styles.figure}>
+              <figure className={styles.figure} key={index}>
                 <Image
                   className={styles.img}
                   src={item.data.src}
@@ -131,22 +108,29 @@ export default async function Page({ params }: Props) {
                 )}
               </figure>
             ) : item.type === 'affiliateLink' ? (
-              <div>
-                <span>{item.data.affi.name}</span>
-                <span>{item.data.affi.amazon}</span>
+              <div key={index}>
+                {item.data.affi.map((affi) => (
+                  <div key={affi._id}>
+                    <span>{affi.name}</span>
+                    <span>{affi.amazon}</span>
+                  </div>
+                ))}
               </div>
             ) : null
           )}
-          <ul className={styles.tags}>
-            {(article.tags ?? []).map((tag) => (
-              <li className={styles.tagItem} key={tag._id}>
-                <Link className={styles.tagAnchor} href={`/tags/${tag.slug}`}>
-                  <AiFillTag />
-                  {tag.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className={styles.articleBottom}>
+            <ul className={styles.tags}>
+              {(article.tags ?? []).map((tag) => (
+                <li className={styles.tagItem} key={tag._id}>
+                  <Link className={styles.tagAnchor} href={`/tags/${tag.slug}`}>
+                    <AiFillTag />
+                    {tag.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <TwitterShareButton title={article.title} />
+          </div>
           <aside className={styles.author}>
             <h2 className={`${styles.authorTitle} tocignore`}>
               <BsVectorPen className={styles.authorIcon} />

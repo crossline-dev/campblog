@@ -1,0 +1,113 @@
+@use "../common/index" as *;
+
+.menu {
+  display: block;
+  position: relative;
+}
+
+.button {
+  color: $c-text-light;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-weight: 500;
+  outline: none;
+  span {
+    padding: 0 0 1px 0;
+    letter-spacing: 0.04em;
+  }
+  &[aria-expanded="true"] {
+    .icon {
+      transform: rotate(180deg);
+    }
+    .text {
+      transform: translate(0, -50%);
+    }
+  }
+}
+
+.textWrapper {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  line-height: 0.9375rem;
+  height: 0.9375rem;
+}
+
+.text {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.textopen,
+.textclose {
+  display: block;
+}
+
+.icon {
+  font-size: 1rem;
+  color: $c-text-lighter;
+  transition: transform 0.2s;
+}
+
+.list {
+  opacity: 1;
+  border-radius: $radius;
+  transform: (0, 0);
+  transform-origin: top right;
+  margin-top: 1rem;
+  position: absolute;
+  right: 0;
+  z-index: 999;
+  width: 180px;
+  @include mq(pc) {
+    width: 240px;
+  }
+  background-color: #fff;
+  overflow: hidden;
+  padding: 6px;
+  list-style: none;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+  animation: menuIn 0.2s ease-in-out;
+  outline: none;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.anchor {
+  color: $c-text-light;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+  @include mq(pc) {
+    font-size: 1rem;
+  }
+  font-weight: 500;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 8px 0 10px;
+  width: 100%;
+  border-radius: 4px;
+  &:hover,
+  &:focus {
+    background-color: $c-bg;
+  }
+}
+
+@keyframes menuIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

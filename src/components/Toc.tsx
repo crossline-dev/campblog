@@ -12,6 +12,7 @@ export default function Toc() {
       contentSelector: '.article_container',
       headingSelector: 'h2',
       ignoreSelector: '.tocignore',
+      scrollSmoothOffset: -62,
     })
 
     return () => {

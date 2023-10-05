@@ -1,12 +1,5 @@
 @use "../styles/common/index" as *;
 
-.wrapper {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: 100%;
-  min-height: 100vh;
-}
-
 .main {
   background-color: $c-bg;
   padding-top: 3rem;
@@ -15,4 +8,5 @@
     padding-top: clamp-calc(24px, 64px);
     padding-bottom: clamp-calc(24px, 64px);
   }
+  min-height: calc(100vh - $header-height);
 }

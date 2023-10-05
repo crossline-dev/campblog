@@ -13,6 +13,7 @@ type Props = {
   activeClassName?: string
 } & LinkProps
 
+// eslint-disable-next-line unused-imports/no-unused-vars
 const ActiveLink: React.FC<Props> = ({ children, className, ...props }) => {
   const pathname = usePathname()
 

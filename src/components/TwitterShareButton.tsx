@@ -8,8 +8,7 @@ export function TwitterShareButton({ title }: { title: string }) {
       `https://twitter.com/share?url=${encodeURIComponent(
         window.location.href
       )}&text=${encodeURIComponent(title)}`,
-      '',
-      'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=600'
+      ''
     )
   }
 
@@ -20,7 +19,8 @@ export function TwitterShareButton({ title }: { title: string }) {
       aria-label="twitter"
       onClick={shareOnTwitter}
     >
-      <AiOutlineTwitter />
+      <AiOutlineTwitter className={styles.twitterIcon} />
+      <span>この記事をツイートする</span>
     </button>
   )
 }

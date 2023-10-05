@@ -2,4 +2,20 @@
 
 .twitter {
   display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 6px;
+  border: solid 1px $c-text-lighter;
+  border-radius: 999px;
+  padding: 0.55rem 1rem 0.55rem 0.9rem;
+  transition: 0.25s;
+  color: $c-text-light;
+  &:hover,
+  &:focus {
+    background-color: $c-bg-light;
+  }
+}
+
+.twitterIcon {
+  font-size: 1.5rem;
 }

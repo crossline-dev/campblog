@@ -46,7 +46,7 @@ interface AffiliateItemData {
 interface AffiliateData {
   type: 'affiliateLink'
   data: {
-    affi: AffiliateItemData
+    affi: [AffiliateItemData]
   }
 }
 
@@ -60,7 +60,17 @@ export interface Article extends Content {
     ogImage?: Media
   }
   body: [MarkDownData, ImageData, LinkCardData, AffiliateData]
-  coverImage: Media
+  coverImage: {
+    description?: string
+    altText: string
+    _id: string
+    src: string
+    fileType: string
+    fileName: string
+    fileSize: number
+    width: number | `${number}` | undefined
+    height: number | `${number}` | undefined
+  }
   author: Author
   tags?: Tag[]
   categorys: Category[]

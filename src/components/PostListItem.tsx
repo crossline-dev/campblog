@@ -1,14 +1,24 @@
+'use client'
+
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import type { Article } from '@/types/article'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { fadeInUp } from '@/animations/variants'
 import { formatDate } from '@/lib/date'
 import styles from '@/styles/components/postlist.module.scss'
 import thumbEmpty from '@@/public/thumb_empty.png'
 
 export default function PostListItem({ article }: { article: Article }) {
   return (
-    <article className={styles.item}>
+    <motion.article
+      className={styles.item}
+      variants={fadeInUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
       <h2 className={styles.title}>
         <Link className={styles.anchor} href={`/articles/${article.slug}`}>
           {article.title}
@@ -21,7 +31,8 @@ export default function PostListItem({ article }: { article: Article }) {
               className={styles.image}
               src={article.coverImage.src}
               alt={article.title}
-              fill
+              width={article.coverImage.width}
+              height={article.coverImage.height}
             />
           ) : (
             <Image
@@ -54,6 +65,6 @@ export default function PostListItem({ article }: { article: Article }) {
           <li key={tag._id}>#{tag.name}</li>
         ))}
       </ul>
-    </article>
+    </motion.article>
   )
 }

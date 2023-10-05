@@ -31,7 +31,7 @@
   transition: background 0.2s;
   font-weight: bold;
   font-size: clamp-calc(12px, 18px);
-  background: none;
+  background: #fff;
   cursor: pointer;
   &:hover {
     background-color: $c-bg-dark;

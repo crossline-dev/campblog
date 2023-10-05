@@ -52,11 +52,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={inter.variable}>
-        <div className={styles.wrapper}>
-          <Header />
-          <main className={styles.main}>{children}</main>
-          <Footer />
-        </div>
+        <Header />
+        <main className={styles.main}>{children}</main>
+        <Footer />
       </body>
     </html>
   )

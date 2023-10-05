@@ -3,15 +3,15 @@
 .common {
   width: 100%;
   margin: 0 auto;
-  padding: 0 clamp-calc(24px, 64px);
-  max-width: 1480px;
+  padding: 0 clamp-calc(16px, 40px);
+  max-width: 1280px;
 }
 
 .wide {
   width: 100%;
   margin: 0 auto;
   padding: 0 clamp-calc(12px, 40px);
-  max-width: 1480px;
+  max-width: 1280px;
 }
 
 .slim {

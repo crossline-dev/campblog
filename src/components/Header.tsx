@@ -3,8 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import styles from '@/styles/components/header.module.scss'
-import ActiveLink from '@/components/ActiveLink'
 import Container from '@/components/Container'
+import Dropdown from '@/components/Dropdown'
 
 export default function Header() {
   const pathname = usePathname()
@@ -23,16 +23,10 @@ export default function Header() {
               )}
             </Link>
           </div>
-          <nav className={styles.navi}>
-            <ul className={styles.naviList}>
-              <li>
-                <ActiveLink href="/">HOME</ActiveLink>
-                <ActiveLink href="/categorys/campgear/">Gear</ActiveLink>
-              </li>
-            </ul>
-          </nav>
+          <Dropdown />
         </div>
       </Container>
+      <div className={styles.bg}></div>
     </header>
   )
 }
